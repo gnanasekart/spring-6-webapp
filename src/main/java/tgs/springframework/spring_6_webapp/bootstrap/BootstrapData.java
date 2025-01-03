@@ -23,15 +23,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-
-        Author author = new Author();
-        author.setFirstName("Gnana");
-        author.setLastName("Sekar");
-
-        Book book = new Book();
-        book.setTitle("Spring 5 Recipes");
-        book.setIsbn("978-1-4842-4224-3");
+    public void run(String... args) {
 
         Publisher pub = new Publisher();
         pub.setPublisherName("Packt Publishing");
@@ -40,9 +32,20 @@ public class BootstrapData implements CommandLineRunner {
         pub.setCity("MY");
         pub.setZip("560033");
 
+        Publisher publisher = publisherRepository.save(pub);
+
+        Author author = new Author();
+        author.setFirstName("Gnana");
+        author.setLastName("Sekar");
+
+        Book book = new Book();
+        book.setTitle("Spring 5 Recipes");
+        book.setIsbn("978-1-4842-4224-3");
+        book.setPublisher(pub);
+
         Author authorSave = authorRepository.save(author);
         Book bookSave = bookRepository.save(book);
-        Publisher publisher = publisherRepository.save(pub);
+
 
         Author tgs = new Author();
         tgs.setFirstName("sus");
@@ -51,6 +54,7 @@ public class BootstrapData implements CommandLineRunner {
         Book book1 = new Book();
         book1.setTitle("me");
         book1.setIsbn("978-1-4842");
+        book1.setPublisher(pub);
 
         Author authorSave1 = authorRepository.save(tgs);
         Book bookSave1 = bookRepository.save(book1);
@@ -60,6 +64,8 @@ public class BootstrapData implements CommandLineRunner {
 
         authorRepository.save(author);
         authorRepository.save(tgs);
+        bookRepository.save(book1);
+        bookRepository.save(book);
 
         System.out.println("Author count: "+ authorRepository.count());
         System.out.println("Book count: "+ bookRepository.count());
