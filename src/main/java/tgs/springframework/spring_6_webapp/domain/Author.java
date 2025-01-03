@@ -2,6 +2,7 @@ package tgs.springframework.spring_6_webapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -48,5 +49,26 @@ public class Author {
         this.lastName = lastName;
     }
 
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", books=" + books +
+                '}';
+    }
 
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Author author)) return false;
+
+        return Objects.equals(id, author.id);
+    }
+
+    @Override
+    public int hashCode() {
+        //return Objects.hashCode(id);
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }
